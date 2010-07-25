@@ -1,0 +1,99 @@
+<html>
+ 	<head>
+    <script type="application/javascript" src="javascript/sprites.js"></script>
+		<script type="application/javascript">
+			
+		var canvas = null;
+		var ctx = null;
+		var FPS = 30;
+		
+		var logo = null;
+		var mario = null;
+		var marioImg = null;
+
+		document.onkeydown = checkKeyDown;
+		document.onkeyup = checkKeyUp;
+
+		function init() {
+			
+			canvas = document.getElementById("canvas");
+			
+			if (canvas.getContext) {
+				ctx = canvas.getContext("2d");
+				
+				// Load MM sprite image
+				marioImg = new Image();
+				marioImg.src = "images/mm.png";
+				
+				// Build test sprite
+				mario = new Sprite(250, 400, 25, 30, "StandRight");
+				
+				// Create MM animations, 5 frames per step
+				mario.add_animation("RunRight", new Animation(marioImg, 0, 0, 25, 30, 3, 5));
+				mario.add_animation("RunLeft", new Animation(marioImg, 0, 30, 25, 30, 3, 5));
+				mario.add_animation("StandLeft", new Animation(marioImg, 0, 60, 25, 30, 0, 5));
+				mario.add_animation("StandRight", new Animation(marioImg, 0, 90, 25, 30, 0, 5));				
+				
+				setInterval( draw, 1000/FPS );
+			}
+		}
+		
+		function draw()
+		{
+			// Draw background
+				ctx.fillStyle = 'rgb(0,0,0)';
+				ctx.fillRect(0,0,500,500);			
+			
+			/*
+				logo = new Image();
+				logo.onload = function() 
+				{
+					ctx.drawImage(logo, 0, 0, 500, 180);
+				}
+				logo.src = "img/assets/logo.png";
+		  */		
+			
+		  mario.draw(ctx);
+		}
+		
+		function checkKeyDown(e)
+		{
+			var currentKey = e.which;
+			
+			switch (currentKey)
+			{
+				case 37:
+				  mario.move(-10, 0);
+					mario.set_animation("RunLeft");
+					break;
+				case 39:
+					mario.move(10, 0);
+				  mario.set_animation("RunRight");
+					break;
+			}
+		}
+		
+		function checkKeyUp(e)
+		{
+			var currentKey = e.which;
+			
+			switch (currentKey)
+			{
+				case 37:
+					mario.set_animation("StandLeft");
+					break;
+				case 39:
+				  mario.set_animation("StandRight");
+					break;
+			}
+		}
+		
+        </script>
+	</head>
+    
+ 	<body onLoad="init();">
+ 
+   		<canvas id="canvas" width="500" height="500"></canvas>
+        
+	</body>
+</html>
