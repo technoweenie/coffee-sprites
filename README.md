@@ -11,3 +11,7 @@ http://www.yes2web.nl/files/artikelen/sprites/supermario3.gif
 ## Development
 
     $ coffee -wc -o javascript src/**/*.coffee
+
+## Similar
+
+* Mike Smullin's [CoffeeSprites](https://github.com/mikesmullin/coffee-sprites) generates sprite images from within stylesheets.
